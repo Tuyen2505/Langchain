@@ -10,7 +10,7 @@ from src.base.llm_model import get_hf_llm
 from src.rag.main import build_rag_chain, InputQA, OutputQA
 
 llm = get_hf_llm(temperature=0.9)
-genai_docs = "./data_source/generative_ai"
+genai_docs = "./data_source/vietnam"
 
 
 genai_chain = build_rag_chain(llm, data_dir=genai_docs, data_type="pdf")
@@ -39,7 +39,7 @@ async def check():
 
 @app.post("/generative_ai", response_model=OutputQA) 
 async def generative_ai(inputs: InputQA):
-    answer = genai_chain.invoke(inputs.question)
+    answer = genai_chain.invoke(f"Trả lời bằng tiếng Việt: {inputs.question}")
     return {"answer": answer}
 
 #------------------ Langserver Routes ------------------

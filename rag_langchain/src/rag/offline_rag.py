@@ -18,7 +18,7 @@ class Str_OutputParser(StrOutputParser):
         if match:
             answer_text = match.group(1).strip()
             return answer_text
-        else:
+        else:                                                                                                                                                                                                       
             return text_response
 
 
