@@ -3,6 +3,7 @@ langchain-core
 langchain-community
 langchain_chroma
 langchain_text_splitters
+langserve
 transformers
 tqdm
 faiss-cpu
@@ -11,3 +12,10 @@ huggingface_hub
 pydantic
 multiprocessing-logging
 numpy
+langchain_huggingface
+bitsandbytes
+fastapi
+accelerate>=0.26.0 
+Pillow
+pypdf
+rapidocr-onnxruntime
