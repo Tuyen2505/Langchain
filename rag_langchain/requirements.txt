@@ -1,0 +1,13 @@
+langchain
+langchain-core 
+langchain-community
+langchain_chroma
+langchain_text_splitters
+transformers
+tqdm
+faiss-cpu
+chromadb
+huggingface_hub
+pydantic
+multiprocessing-logging
+numpy
