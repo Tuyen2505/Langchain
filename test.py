@@ -25,3 +25,23 @@ llm = get_hf_llm()
 
 response = llm.invoke("Viết một bài thơ về mùa xuân.")
 print(response)
+
+
+
+
+
+
+
+
+
+
+
+
+    # def get_chain(self, retriever, query):
+    #     retrieved_docs = retriever.retrieve(query)
+    #     formatted_docs = self.format_docs(retrieved_docs)
+        
+    #     input_data = {
+    #         "context": formatted_docs,
+    #         "question": query
+    #     }

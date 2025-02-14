@@ -5,13 +5,13 @@ import multiprocessing
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-def remove_non_utf8_characters(text):
-    return ' '.join(char for char in text if ord(char) < 128)
+def remove_invalid_utf8(text):
+    return text.encode("utf-8", errors="ignore").decode("utf-8")
 
 def load_pdf(pdf_file):
     docs = PyPDFLoader(pdf_file, extract_images=True).load()
     for doc in docs:
-        doc.page_content = remove_non_utf8_characters(doc.page_content)
+        doc.page_content = remove_invalid_utf8(doc.page_content)
     return docs
 
 def get_num_cpu():
@@ -44,7 +44,7 @@ class TextSplitter:
     def __init__(self,
                 separators: List[str] = ["\n\n", "\n", " ", ""],
                 chunk_size: int = 300,
-                chunk_overlap: int = 0,
+                chunk_overlap: int = 80,
                 ) -> None:
         
         self.splitter = RecursiveCharacterTextSplitter(
@@ -61,7 +61,7 @@ class Loader:
                 file_type: str = Literal["pdf"],
                 split_kwargs: dict = {
                     "chunk_size": 300,
-                    "chunk_overlap": 0
+                    "chunk_overlap": 100
                 }) -> None:
         
         assert file_type in ["pdf"], "file_type must be pdf"
@@ -87,18 +87,3 @@ class Loader:
         else:
             raise ValueError("file_type must be pdf")
         return self.load(files, workers)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

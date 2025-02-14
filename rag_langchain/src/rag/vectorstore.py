@@ -9,6 +9,7 @@ model = SentenceTransformer(model_name)
 embedding_model = HuggingFaceEmbeddings(model_name = model_name)
 
 class VectorDB:
+
     def __init__(self,
                 documents = None,
                 vector_db: Union[Chroma, FAISS] = Chroma,

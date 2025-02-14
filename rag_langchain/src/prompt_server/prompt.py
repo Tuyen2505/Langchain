@@ -14,17 +14,18 @@ def process_prompt(text_input_prompt):
 
     def rewrite_prompt(prompt):
         messages = [
-            # {"role": "system", "content": "tôi là một nhân viên viết lại prompt bằng tiếng việt cho lãnh đạo, viết lại ngắn gọn súc tích nhưng không thêm bớt nội dung và tóm tắt mọi thứ trong 1 câu. viết lại prompt dành cho báo cáo"},
-            {"role": "system", "content": "Tôi chỉ viết lại và nâng cao prompt bằng tiếng Việt, không trả lời bất kỳ câu hỏi nào, chỉ trong 1 câu"},
+            {"role": "system", "content": "Tôi chỉ viết lại và nâng cao prompt bằng tiếng việt cho ban lãnh đạo tại Việt Nam, tôi chỉ viết lại prompt, không trả lời bất gì câu hỏi nào, viết lại ngắn gọn súc tích nhưng không thêm bớt nội dung và tóm tắt mọi thứ trong 1 câu. viết lại prompt dành cho báo cáo"},
+            #{"role": "system", "content": "Tôi chỉ viết lại và nâng cao prompt bằng tiếng Việt, không trả lời bất kỳ câu hỏi nào, chỉ trong 1 câu"},
             ]
-        prompt_template = f"Viết lại & nâng cao & không cần trả lời & chỉ trong 1 câu & không thêm nội dung ngoài:viết lại {prompt}"
+        #prompt_template = f"Viết lại & nâng cao & không cần trả lời & chỉ trong 1 câu & không thêm nội dung ngoài:viết lại {prompt}"
+        prompt_template = f"Viết lại & nâng cao & không cần trả lời & chỉ trong 1 câu & không thêm nội dung ngoài: viết một báo cáo về {prompt}"
         messages.append({"role": "user", "content": prompt_template})
         # messages = [
         #     {"role": "system", "content": "tôi là thư ký của Hoàng Thành Đạt, trả lời bằng tiếng việt"},
         #     ]
         # prompt_template = f"Tôi cần :{prompt}"
         # messages.append({"role": "user", "content": prompt_template})
-
+        #print(messages)
         outputs = pipe(
         messages,
         temperature=0.8,
@@ -38,8 +39,8 @@ def process_prompt(text_input_prompt):
 
     # while True:
     text_input = input(text_input_prompt)
-    # if text_input.lower() == 'exit':
-    #     break
+        # if text_input.lower() == 'exit':
+        #     break
     result = rewrite_prompt(text_input)
 
     return result
