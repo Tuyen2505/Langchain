@@ -60,7 +60,7 @@ class Loader:
     def __init__(self,
                 file_type: str = Literal["pdf"],
                 split_kwargs: dict = {
-                    "chunk_size": 300,
+                    "chunk_size": 400,
                     "chunk_overlap": 100
                 }) -> None:
         

@@ -29,8 +29,9 @@ class Offline_RAG():
         self.str_parser = Str_OutputParser()
 
     def get_chain(self, retriever):
+        print(retriever)
         input_data = {
-            "context": retriever | self.format_docs,
+            "context": self.format_docs(retriever),  # Gọi method thay vì dùng toán tử `|`
             "question": RunnablePassthrough()
         }
 
@@ -43,4 +44,7 @@ class Offline_RAG():
         return rag_chain
 
     def format_docs(self, docs):
-        return "\n\n".join(doc.page_content for doc in docs)
+        if not isinstance(docs, dict) or "content" not in docs:
+            raise ValueError("Dữ liệu retriever không hợp lệ. Phải là dictionary chứa key 'content'.")
+        return "\n\n".join(docs["content"])
+

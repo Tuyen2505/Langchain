@@ -12,8 +12,8 @@ from src.rag.main import build_rag_chain, InputQA, OutputQA
 llm = get_hf_llm(temperature=0.9)
 genai_docs = "./data_source/vietnam"
 
-
-genai_chain = build_rag_chain(llm, data_dir=genai_docs, data_type="pdf")
+# genai_chain = build_rag_chain(llm, data_dir=genai_docs, data_type="pdf")
+genai_chain = build_rag_chain(llm)
 
 
 app = FastAPI(
