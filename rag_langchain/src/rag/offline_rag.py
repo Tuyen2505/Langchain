@@ -31,7 +31,7 @@ class Offline_RAG():
     def get_chain(self, retriever):
         print(retriever)
         input_data = {
-            "context": self.format_docs(retriever),  # Gọi method thay vì dùng toán tử `|`
+            "context":  RunnablePassthrough() | retriever.filter | self.format_docs,  # Gọi method thay vì dùng toán tử `|`
             "question": RunnablePassthrough()
         }
 
@@ -44,7 +44,9 @@ class Offline_RAG():
         return rag_chain
 
     def format_docs(self, docs):
+        # Thêm kiểm tra dữ liệu đầu vào
         if not isinstance(docs, dict) or "content" not in docs:
-            raise ValueError("Dữ liệu retriever không hợp lệ. Phải là dictionary chứa key 'content'.")
+            raise ValueError("Invalid document format. Expected dict with 'content' key.")
+            
         return "\n\n".join(docs["content"])
 

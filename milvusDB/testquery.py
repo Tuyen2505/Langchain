@@ -1,6 +1,6 @@
 from pymilvus import connections, Collection
 from sentence_transformers import SentenceTransformer
-
+from langchain_core.runnables import chain
 # Kết nối đến Milvus
 connections.connect(alias="default", host="localhost", port="19530")
 
@@ -63,13 +63,23 @@ class Retriever:
         )
         return results
 
+    # def filter(self, query_text: str):
+    #     results = self.search_in_milvus(query_text)
+    #     print(results)
+    #     content = [hit.get('my_varchar') for hit in results]
+    #     return {"content": content}
+    
     def filter(self, query_text: str):
         results = self.search_in_milvus(query_text)
-        content = [hit.get('my_varchar') for hit in results[0]]
-        return {"content": content}
+        data = {}
+        content = []
+        for hit in results[0]:
+            content.append(hit.get('my_varchar'))
+        data["content"] = content
+        return data
 # # Nhập câu truy vấn
 # query_text = input("Nhập câu để tìm kiếm: ")
-# data =   Retriever(query_text).filter()
-# #print(abc)
+# data =   Retriever().filter(query_text)
+# # #print(abc)
 # # data = filter(abc)
 # print(data)
