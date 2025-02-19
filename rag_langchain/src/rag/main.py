@@ -23,7 +23,6 @@ class OutputQA(BaseModel):
 def build_rag_chain(llm):
     retriever = Retriever()
     rag_chain = Offline_RAG(llm).get_chain(retriever)
-
     return rag_chain
 
 

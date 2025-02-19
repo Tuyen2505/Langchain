@@ -48,7 +48,7 @@ class Retriever:
     def __init__(self, search_type="L2") -> None:
         self.search_type = search_type
 
-    def search_in_milvus(self, query_text, top_k=10, threshold=90):
+    def search_in_milvus(self, query_text, top_k=10):
         # Mã hóa câu nhập thành vector
         query_vector = model.encode([query_text]).tolist()
         
@@ -59,7 +59,7 @@ class Retriever:
             anns_field="vectorDB",
             param=search_params,
             limit=top_k,
-            output_fields=["my_varchar"]
+            output_fields=["my_varchar", "page", "source"]
         )
         return results
 
@@ -69,17 +69,29 @@ class Retriever:
     #     content = [hit.get('my_varchar') for hit in results]
     #     return {"content": content}
     
-    def filter(self, query_text: str):
+    def filter(self, query_text: str, threshold=130):
         results = self.search_in_milvus(query_text)
         data = {}
         content = []
+        page = []
+        source = []
         for hit in results[0]:
-            content.append(hit.get('my_varchar'))
+            if hit.distance < threshold:
+                content.append(hit.get('my_varchar'))
+                page.append(hit.get('page'))
+                source.append(hit.get('source'))
         data["content"] = content
+        data["page"] = page
+        data["source"] = source
         return data
 # # Nhập câu truy vấn
-# query_text = input("Nhập câu để tìm kiếm: ")
-# data =   Retriever().filter(query_text)
-# # #print(abc)
-# # data = filter(abc)
-# print(data)
+while True:
+    query_text = input("Nhập câu để tìm kiếm: ")
+    if query_text == "exit":
+        break
+    data =   Retriever().filter(query_text)
+    print(data)
+    # print(data["content"])
+    # print(data["source"])
+
+

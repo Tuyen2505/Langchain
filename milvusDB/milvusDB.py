@@ -39,7 +39,16 @@ schema.add_field(
     datatype=DataType.VARCHAR, 
     max_length=65535
 )
-
+schema.add_field(
+    field_name="page", 
+    datatype=DataType.VARCHAR, 
+    max_length=300
+)
+schema.add_field(
+    field_name="source", 
+    datatype=DataType.VARCHAR, 
+    max_length=65535
+)
 client.create_collection(
     collection_name=collection_name,
     schema=schema
@@ -47,22 +56,22 @@ client.create_collection(
 
 # Tạo index cho trường vectorDB
 
-# index_params = MilvusClient.prepare_index_params()
+index_params = MilvusClient.prepare_index_params()
 
-# index_params.add_index(
-#     field_name="vectorDB",
-#     metric_type="L2",
-#     index_type="IVF_FLAT",
-#     index_name="vector_index",
-#     params={ "nlist": 128 }
-# )
+index_params.add_index(
+    field_name="vectorDB",
+    metric_type="L2",
+    index_type="IVF_FLAT",
+    index_name="vector_index",
+    params={ "nlist": 128 }
+)
 
-# client.create_index(
-#     collection_name=collection_name,
-#     index_params=index_params,
-#     timeout=30,
-#     sync=False # Whether to wait for index creation to complete before returning. Defaults to True.
-# )
+client.create_index(
+    collection_name=collection_name,
+    index_params=index_params,
+    timeout=30,
+    sync=False # Whether to wait for index creation to complete before returning. Defaults to True.
+)
 
 
 
@@ -74,14 +83,18 @@ def insert_pdf_to_milvus(data_dir,data_type):
     doc_loader = Loader(file_type=data_type).load_dir(data_dir, workers=2)
     chunks = [doc.page_content for doc in doc_loader]
     embeddings = model.encode(chunks)
+    dirs = [doc.metadata["source"] for doc in doc_loader]
+    page_labels = [doc.metadata["page_label"] for doc in doc_loader]
     
     # Chuẩn bị dữ liệu để chèn, thêm thuộc tính chunk_overlap
     data = [
         {
             "vectorDB": emb.tolist(),
             "my_varchar": chunk,
+            "page": page_label,
+            "source": dir
         } 
-        for emb, chunk in zip(embeddings, chunks)
+        for emb, chunk, page_label, dir in zip(embeddings, chunks, page_labels, dirs)
     ]
     
     # Thực hiện insert vào collection (giả sử client và collection_name đã được khởi tạo)

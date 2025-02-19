@@ -19,6 +19,14 @@ def get_hf_llm(model_name: str = "gemini-2.0-flash-exp",
 
     return llm
 
+# llm = get_hf_llm()
+# result = llm.invoke("What is the capital of France?")
+
+# # Lấy chỉ nội dung câu trả lời
+# answer = result.content
+
+# print(answer)
+
 # import torch
 # from transformers import BitsAndBytesConfig
 # from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
