@@ -85,12 +85,12 @@ class Retriever:
         data["source"] = source
         return data
 # # Nhập câu truy vấn
-while True:
-    query_text = input("Nhập câu để tìm kiếm: ")
-    if query_text == "exit":
-        break
-    data =   Retriever().filter(query_text)
-    print(data)
+# while True:
+#     query_text = input("Nhập câu để tìm kiếm: ")
+#     if query_text == "exit":
+#         break
+#     data =   Retriever().filter(query_text)
+#     print(data)
     # print(data["content"])
     # print(data["source"])
 
