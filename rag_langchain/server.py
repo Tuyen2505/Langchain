@@ -3,14 +3,11 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 from src.base.llm_model import get_hf_llm
-from src.rag.main import build_rag_chain, InputQA, OutputQA
+from src.rag.main import build_rag_chain
 
 llm = get_hf_llm(temperature=0.9)
 genai_docs = "./data_source/vietnam"
-
-# genai_chain = build_rag_chain(llm, data_dir=genai_docs, data_type="pdf")
 genai_chain = build_rag_chain(llm)
-
 
 @app.route("/generative_ai", methods=["POST"])
 def generative_ai():

@@ -1,6 +1,5 @@
 from transformers import pipeline
 import torch
-import os
 
 def process_prompt(prompt):
     
