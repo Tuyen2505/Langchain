@@ -2,6 +2,7 @@ from pymilvus import connections, Collection
 from sentence_transformers import SentenceTransformer
 from langchain_core.runnables import chain
 # Kết nối đến Milvus
+#connections.connect(alias="default", host="milvus-standalone", port="19530")
 connections.connect(alias="default", host="localhost", port="19530")
 
 # Khởi tạo collection
@@ -18,7 +19,6 @@ class Retriever:
     def search_in_milvus(self, query_text, top_k=10):
         # Mã hóa câu nhập thành vector
         query_vector = model.encode([query_text]).tolist()
-        
         # Truy vấn Milvus
         search_params = {"metric_type": self.search_type, "params": {"nprobe": 10}}
         results = collection.search(

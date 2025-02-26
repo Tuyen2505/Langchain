@@ -11,6 +11,6 @@ RUN pip install -r requirements.txt
 
 COPY ./rag_langchain ./rag_langchain
 
-EXPOSE 2505
+EXPOSE 5000
 
-CMD ["python" , "milvusDB/milvusDB.py" && "python", "rag_langchain/server.py"]
+CMD ["python", "rag_langchain/server.py"]

@@ -2,7 +2,7 @@ import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 def get_hf_llm(model_name: str = "gemini-2.0-flash-exp",
-               max_new_token=1024,
+               max_new_token=1280000000,
                **kwargs):
 
     # Đặt API Key (cần thay thế bằng API key thật của bạn)
