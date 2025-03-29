@@ -6,7 +6,7 @@ from langchain_core.runnables import chain
 connections.connect(alias="default", host="localhost", port="19530")
 
 # Khởi tạo collection
-collection_name = "pdf_collection"  # Thay thế bằng tên collection của bạn
+collection_name = "vietnam"  # Thay thế bằng tên collection của bạn
 collection = Collection(collection_name)
 collection.load()
 # Load mô hình embedding
@@ -36,23 +36,24 @@ class Retriever:
         content = []
         page = []
         source = []
+        distance = []
         for hit in results[0]:
             if hit.distance < threshold:
                 content.append(hit.get('my_varchar'))
                 page.append(hit.get('page'))
                 source.append(hit.get('source'))
+                distance.append(hit.distance)
         data["content"] = content
         data["page"] = page
         data["source"] = source
+        data["distance"] = distance
         return data
-# # Nhập câu truy vấn
-# while True:
-#     query_text = input("Nhập câu để tìm kiếm: ")
-#     if query_text == "exit":
-#         break
-#     data =   Retriever().filter(query_text)
-#     print(data)
-    # print(data["content"])
-    # print(data["source"])
+# Nhập câu truy vấn
+while True:
+    query_text = input("Nhập câu để tìm kiếm: ")
+    if query_text == "exit":
+        break
+    data =   Retriever().filter(query_text)
+    print(data)
 
 

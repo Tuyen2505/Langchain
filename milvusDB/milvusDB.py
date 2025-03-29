@@ -16,7 +16,7 @@ client = MilvusClient(
 )
 
 # 2. Tạo collection với schema tùy chỉnh :cite[4]:cite[8]
-collection_name = "pdf_collection"
+collection_name = "vietnam"
 dimension = 768  
 
 schema = client.create_schema(
